@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import config from './app/config';
 import app from './app';
 async function main() {
-  // sever code
   try {
     await mongoose.connect(config.database_url as string);
     app.listen(config.port, () => {

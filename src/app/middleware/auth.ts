@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import { TUserRole } from "../module/Auth/user.interface";
+import { TUserRole } from "../module/Auth/auth.interface";
 import { CatchAsyncPromise } from "./CatchAsyncPromise";
 import AppError from "../../utils/AppError";
 import httpStatus from "http-status";
-import { verifyToken } from "../module/Auth/user.utils";
+import { verifyToken } from "../module/Auth/auth.utils";
 import config from "../config";
 import { JwtPayload } from "jsonwebtoken";
-import { User } from "../module/Auth/user.model";
+import { User } from "../module/Auth/auth.model";
 
 export const auth = (...userRole: TUserRole[]) => {
   return CatchAsyncPromise(
@@ -44,7 +44,7 @@ export const auth = (...userRole: TUserRole[]) => {
       }
 
       //!set to request
-      req.userPayload = decoded as JwtPayload
+      req.user = decoded as JwtPayload
       next()
     }
   )

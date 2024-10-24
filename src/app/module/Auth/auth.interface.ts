@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { Model } from "mongoose";
-import { USER_ROLE } from "./user.constant";
+import { USER_ROLE } from "./auth.constant";
 
 // User Model
 export interface TUser {
-  _id:string;
+  _id: string;
   username: string;
   email: string;
   password: string;

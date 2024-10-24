@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { userRole, UserStatus } from "./user.constant";
+import { userRole, UserStatus } from "./auth.constant";
 
 const passwordValidationSchema = z.string()
   .refine((password) => {
@@ -15,7 +15,7 @@ const createUserValidation = z.object({
     username: z.string(),
     email: z.string(),
     password: passwordValidationSchema,
-    needsPasswordChange: z.boolean(),
+    // needsPasswordChange: z.boolean(),
     role: z.enum([...userRole] as [string, ...string[]]),
     isDeleted: z.boolean(),
     status: z.enum([...UserStatus] as [string, ...string[]]),
@@ -23,6 +23,22 @@ const createUserValidation = z.object({
     designation: z.string(),
     country: z.string(),
     profileImage: z.string(),
+  })
+})
+
+const updateUserValidation = z.object({
+  body: z.object({
+    username: z.string().optional(),
+    email: z.string().optional(),
+    password: passwordValidationSchema.optional(),
+    // needsPasswordChange: z.boolean(),
+    role: z.enum([...userRole] as [string, ...string[]]).optional(),
+    isDeleted: z.boolean().optional(),
+    status: z.enum([...UserStatus] as [string, ...string[]]).optional(),
+    bio: z.string().optional(),
+    designation: z.string().optional(),
+    country: z.string().optional(),
+    profileImage: z.string().optional(),
   })
 })
 
@@ -73,5 +89,6 @@ export const UserValidations = {
   changePasswordValidation,
   resetPasswordValidationSchema,
   forgetPasswordValidationSchema,
-  refreshTokenValidationSchema
+  refreshTokenValidationSchema,
+  updateUserValidation
 }

@@ -3,7 +3,7 @@
 import httpStatus from "http-status"
 import { ResponseSend } from "../../../utils/ResponseSend"
 import { CatchAsyncPromise } from "../../middleware/CatchAsyncPromise"
-import { UserServices } from "./user.service"
+import { UserServices } from "./auth.service"
 import config from "../../config"
 
 const createUser = CatchAsyncPromise(
@@ -39,7 +39,7 @@ const loginUser = CatchAsyncPromise(
 
 const changePassword = CatchAsyncPromise(
   async (req, res, next) => {
-    const userId = req.userPayload._id
+    const userId = req.user._id
     const result = await UserServices.changePasswordIntoDB(userId, req.body)
 
     ResponseSend(res, {
@@ -86,18 +86,7 @@ const resetPassword = CatchAsyncPromise(async (req, res) => {
   });
 });
 
-// const getAllUser = CatchAsyncPromise(
-//   async (req, res, next) => {
-//     const result = await UserServices.getAllUserIntoDB()
-//     res.status(200).json({
-//       success: true,
-//       statusCode: httpStatus.OK,
-//       message: "Users retrieved successfully",
-//       data: result,
-//     }
-//     )
-//   }
-// )
+
 
 export const UserControllers = {
   createUser,

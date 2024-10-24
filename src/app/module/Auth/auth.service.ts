@@ -1,9 +1,9 @@
 import httpStatus from "http-status";
 import AppError from "../../../utils/AppError";
-import { TUser } from "./user.interface";
-import { User } from "./user.model";
+import { TUser } from "./auth.interface";
+import { User } from "./auth.model";
 import bcrypt from "bcrypt"
-import { createToken, verifyToken } from "./user.utils";
+import { createToken, verifyToken } from "./auth.utils";
 import { sendEmail } from "../../../utils/sendEmail";
 import { JwtPayload } from "jsonwebtoken";
 import config from "../../config";
@@ -271,14 +271,6 @@ const resetPasswordIntoDB = async (
     },
   );
 };
-
-
-
-
-// const getAllUserIntoDB = async () => {
-//   const result = await User.find();
-//   return result
-// }
 
 export const UserServices = {
   createUserIntoDB,

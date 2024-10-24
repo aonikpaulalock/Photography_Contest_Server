@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { ValidationRequestSchema } from "../../middleware/ValidationRequest";
-import { UserControllers } from "./user.controller";
-import { UserValidations } from "./user.validation";
+import { UserControllers } from "./auth.controller";
+import { UserValidations } from "./auth.validation";
 import { auth } from "../../middleware/auth";
 
 const router = Router();
@@ -56,4 +56,4 @@ router
   //! Get All User
   // .get("/", auth("admin"), UserControllers.getAllUser)
 
-export const UserRouter = router;
+export const AuthRouter = router;
