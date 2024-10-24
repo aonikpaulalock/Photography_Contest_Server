@@ -24,14 +24,36 @@ router
 
   //! Change passoword Login
   .post("/change-password",
-    auth("user", "admin"),
+    auth("user", "contestHolder", "admin"),
     ValidationRequestSchema(
       UserValidations.changePasswordValidation
     ),
     UserControllers.changePassword
   )
 
+
+  .post(
+    '/refresh-token',
+    auth("user", "contestHolder", "admin"),
+    ValidationRequestSchema(UserValidations.refreshTokenValidationSchema),
+    UserControllers.refreshToken,
+  )
+  
+.post(
+    '/forget-password',
+    auth("user", "contestHolder", "admin"),
+    ValidationRequestSchema(UserValidations.forgetPasswordValidationSchema),
+    UserControllers.forgetPassword,
+  )
+  
+  .post(
+    '/reset-password',
+    auth("user", "contestHolder", "admin"),
+    ValidationRequestSchema(UserValidations.resetPasswordValidationSchema),
+    UserControllers.resetPassword,
+  )
+
   //! Get All User
-  .get("/", auth("admin"), UserControllers.getAllUser)
+  // .get("/", auth("admin"), UserControllers.getAllUser)
 
 export const UserRouter = router;

@@ -2,19 +2,20 @@
 import { Model } from "mongoose";
 import { USER_ROLE } from "./user.constant";
 
-export type TPasswordHistory = {
-  password: string;
-  changeAt: Date
-}[]
-
 // User Model
 export interface TUser {
-  _id: string;
+  _id:string;
   username: string;
   email: string;
   password: string;
-  role: 'user' | 'admin';
-  historyOfPassword?: TPasswordHistory
+  // needsPasswordChange: boolean;
+  role: 'user' | 'admin' | 'contestHolder';
+  status: 'active' | 'blocked';
+  isDeleted: boolean;
+  bio: string;
+  designation: string;
+  country: string;
+  profileImage: string;
 }
 
 export type TUserRole = keyof typeof USER_ROLE
@@ -23,5 +24,5 @@ export type TUserRole = keyof typeof USER_ROLE
 export interface UserModel extends Model<TUser> {
   validatePassword(password: string): Promise<boolean>
   isPasswordMatch(textPassword: string, hashPassord: string): Promise<boolean>
-  isUserExists(userName: string): Promise<TUser>
+  isUserExists(email: string): Promise<TUser>
 }

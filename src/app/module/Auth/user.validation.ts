@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { userRole } from "./user.constant";
+import { userRole, UserStatus } from "./user.constant";
 
 const passwordValidationSchema = z.string()
   .refine((password) => {
@@ -11,24 +11,67 @@ const passwordValidationSchema = z.string()
 
 
 const createUserValidation = z.object({
-  username: z.string(),
-  email: z.string(),
-  password: passwordValidationSchema,
-  role: z.enum([...userRole] as [string, ...string[]])
+  body: z.object({
+    username: z.string(),
+    email: z.string(),
+    password: passwordValidationSchema,
+    needsPasswordChange: z.boolean(),
+    role: z.enum([...userRole] as [string, ...string[]]),
+    isDeleted: z.boolean(),
+    status: z.enum([...UserStatus] as [string, ...string[]]),
+    bio: z.string(),
+    designation: z.string(),
+    country: z.string(),
+    profileImage: z.string(),
+  })
 })
 
 const loginUserValidation = z.object({
-  username: z.string(),
-  password: passwordValidationSchema,
+  body: z.object({
+    email: z.string({ required_error: 'email is required.' }),
+    password: passwordValidationSchema,
+  }),
 })
 
 const changePasswordValidation = z.object({
-  currentPassword: passwordValidationSchema,
-  newPassword: passwordValidationSchema,
+  body: z.object({
+    currentPassword: passwordValidationSchema,
+    newPassword: passwordValidationSchema,
+  })
 })
+
+const refreshTokenValidationSchema = z.object({
+  cookies: z.object({
+    refreshToken: z.string({
+      required_error: 'Refresh token is required!',
+    }),
+  }),
+});
+
+const forgetPasswordValidationSchema = z.object({
+  body: z.object({
+    email: z.string({
+      required_error: 'email is required!',
+    }),
+  })
+});
+
+const resetPasswordValidationSchema = z.object({
+  body: z.object({
+    userId: z.string({
+      required_error: 'User id is required!',
+    }),
+    newPassword: z.string({
+      required_error: 'User password is required!',
+    }),
+  })
+});
 
 export const UserValidations = {
   createUserValidation,
   loginUserValidation,
-  changePasswordValidation
+  changePasswordValidation,
+  resetPasswordValidationSchema,
+  forgetPasswordValidationSchema,
+  refreshTokenValidationSchema
 }

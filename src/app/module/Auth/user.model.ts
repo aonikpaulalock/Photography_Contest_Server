@@ -2,34 +2,57 @@ import { Schema, model } from "mongoose";
 import { TUser, UserModel } from "./user.interface";
 import bcrypt from 'bcrypt';
 import config from "../../config";
-import { userRole } from "./user.constant";
+import { userRole, UserStatus } from "./user.constant";
 // User Schema
 const UserSchema = new Schema<TUser, UserModel>({
   username: {
     type: String,
-    unique: true,
-    required: true
+    required: true,
+    trim: true
   },
   email: {
     type: String,
+    required: true,
     unique: true,
-    required: true
+    trim: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
+  // needsPasswordChange: {
+  //   type: Boolean,
+  //   default: false
+  // }, // This could be a password reset field
   role: {
     type: String,
     enum: userRole,
     default: 'user'
   },
-  historyOfPassword: [
-    {
-      password: String,
-      changeAt: Date,
-    },
-  ],
+  isDeleted: {
+    type: Boolean,
+    default: false
+  },
+  status: {
+    type: String,
+    enum: UserStatus,
+    default: 'active'
+  },
+  bio: {
+    type: String,
+    trim: true
+  },
+  designation: {
+    type: String,
+    trim: true
+  },
+  country: {
+    type: String,
+    trim: true
+  },
+  profileImage: {
+    type: String
+  }
 }, {
   timestamps: true,
 });
@@ -40,7 +63,7 @@ UserSchema.pre('save', async function (next) {
   // hashing password and save into DB
   user.password = await bcrypt.hash(
     user.password,
-    Number(config.solt_round),
+    Number(config.bcrypt_salt_rounds),
   );
   next();
 });
@@ -59,8 +82,8 @@ UserSchema.statics.validatePassword = function (password) {
 
 
 //! Is User Exists
-UserSchema.statics.isUserExists = async function (username) {
-  return await User.findOne({ username })
+UserSchema.statics.isUserExists = async function (email) {
+  return await User.findOne({ email })
 }
 
 //! compare password body and datebase
@@ -72,7 +95,6 @@ UserSchema.statics.isPasswordMatch = async function (textPassword, hashPassword)
 UserSchema.methods.toJSON = function () {
   const cloneObj = this.toObject();
   delete cloneObj.password;
-  delete cloneObj.historyOfPassword;
   return cloneObj;
 };
 

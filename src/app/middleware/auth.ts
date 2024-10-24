@@ -22,13 +22,13 @@ export const auth = (...userRole: TUserRole[]) => {
 
       const decoded = verifyToken(
         token,
-        config.jwt_access_token as string
+        config.jwt_access_secret as string
       )
 
-      const { _id } = decoded as JwtPayload
+      const { userId } = decoded as JwtPayload
 
       // //! If User Exists in database
-      const user = await User.findById(_id)
+      const user = await User.findById(userId)
       if (!user) {
         throw new AppError(
           httpStatus.NOT_FOUND,
