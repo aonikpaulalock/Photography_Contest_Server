@@ -27,19 +27,13 @@ const createUserValidation = z.object({
 })
 
 const updateUserValidation = z.object({
-  body: z.object({
-    username: z.string().optional(),
-    email: z.string().optional(),
-    password: passwordValidationSchema.optional(),
-    // needsPasswordChange: z.boolean(),
-    role: z.enum([...userRole] as [string, ...string[]]).optional(),
-    isDeleted: z.boolean().optional(),
-    status: z.enum([...UserStatus] as [string, ...string[]]).optional(),
+    body: z.object({
     bio: z.string().optional(),
     designation: z.string().optional(),
     country: z.string().optional(),
     profileImage: z.string().optional(),
-  })
+    username: z.string().optional(),
+  }),
 })
 
 const loginUserValidation = z.object({

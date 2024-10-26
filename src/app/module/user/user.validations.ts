@@ -7,6 +7,14 @@ const changeStatusValidationSchema = z.object({
   }),
 });
 
+const updateUserRoleValidation = z.object({
+  body: z.object({
+    role: z.enum(['admin', 'contestHolder']),
+  }),
+});
+
+
 export const ValidationUser = {
   changeStatusValidationSchema,
+  updateUserRoleValidation
 };

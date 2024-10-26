@@ -59,10 +59,25 @@ const updateUserFromDB = CatchAsyncPromise(async (req, res) => {
   });
 });
 
+const updateUserRoleFromDB = CatchAsyncPromise(async (req, res) => {
+  const { id } = req.params;
+  const { role } = req.body; 
+
+  const result = await ServicesUsers.updateUserRoleIntoDB(id, role);
+
+  ResponseSend(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User role updated successfully',
+    data: result,
+  });
+});
+
 
 export const ControllersUsers = {
   getAllUserFromDB,
   getMeFromDB,
   changeStatusFromDB,
-  updateUserFromDB
+  updateUserFromDB,
+  updateUserRoleFromDB
 }

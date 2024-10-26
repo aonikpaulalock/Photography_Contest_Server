@@ -19,8 +19,17 @@ router
     ValidationRequestSchema(UserValidations.updateUserValidation),
     ControllersUsers.updateUserFromDB,
   )
+  .patch(
+    '/:id/role',
+    auth("admin"),
+    ValidationRequestSchema(ValidationUser.updateUserRoleValidation),
+    ControllersUsers.updateUserRoleFromDB,
+  )
   //! Get All User
-  .get("/", auth("admin"), ControllersUsers.getAllUserFromDB)
+  .get("/",
+    auth("admin"),
+    ControllersUsers.getAllUserFromDB
+  )
   .get('/me',
     auth("user", "contestHolder", "admin"),
     ControllersUsers.getMeFromDB
