@@ -10,10 +10,14 @@ import config from "../../config";
 
 const createUserIntoDB = async (payload: TUser) => {
   const result = await User.create(payload);
+  // Abcdef11  ---- user
+  // Abcdef12  ---- user
   // Abcdef13  ---- user
-  // XyZ12345  ----- user
+  // Abcdef14  ---- user
+  // Password8 ----- contestHolder
   // Password9 ----- contestHolder
   // Qwerty89 ------ admin
+  // Qwerty90 ------ admin
 
   return result
 }
