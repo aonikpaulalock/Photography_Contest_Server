@@ -18,6 +18,18 @@ const createContestValidation = z.object({
   })
 })
 
+const updateContestValidation = z.object({
+  body: z.object({
+    title: z.string().optional(),
+    prize: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    requirements: z.string().optional(),
+    deadline: z.string().optional(),
+  }),
+})
+
+
 export const ContestValidations = {
   createContestValidation,
+  updateContestValidation
 }

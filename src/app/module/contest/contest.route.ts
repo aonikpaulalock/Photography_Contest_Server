@@ -13,6 +13,17 @@ router
     ValidationRequestSchema(ContestValidations.createContestValidation),
     ContestControllers.createContestFromDB
   )
+  .put(
+    "/:id",
+    auth("admin", "contestHolder"),
+    ValidationRequestSchema(ContestValidations.updateContestValidation),
+    ContestControllers.updateContestFromDB
+  )
+  .delete(
+    "/:id",
+    auth("admin", "contestHolder"),
+    ContestControllers.deleteContestFromDB
+  )
   .get(
     "/",
     auth("admin", "contestHolder"),

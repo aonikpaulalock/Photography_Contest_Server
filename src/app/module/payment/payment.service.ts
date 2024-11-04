@@ -6,6 +6,8 @@ import Contest from "../contest/contest.model";
 import { User } from "../Auth/auth.model";
 import { generateTransactionId } from "./payment.utils";
 import mongoose from "mongoose";
+import { Participation } from "../participation/participation.model";
+import { Submission } from "../submission/sumission.model";
 
 
 const paymentInitIntoDB = async (
@@ -90,6 +92,31 @@ const validatePaymentIntoDB = async (payload: any) => {
       },
       { session }
     );
+
+    // Update the Submission isWinner field
+    await Submission.findOneAndUpdate(
+      {
+        userId: paymentInfo.winnerId,
+        contestId: paymentInfo.contestId
+      },
+      {
+        isWinner: true
+      },
+      { new: true, session }
+    );
+
+    // Update the Participation isWinner field
+    await Participation.findOneAndUpdate(
+      {
+        userId: paymentInfo.winnerId,
+        contestId: paymentInfo.contestId
+      },
+      {
+        isWinner: true
+      },
+      { new: true, session }
+    );
+
 
     await session.commitTransaction();
     session.endSession();

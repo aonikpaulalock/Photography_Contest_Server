@@ -5,6 +5,9 @@ import { ContestRouter } from "../module/contest/contest.route";
 import { ParticipationRouter } from "../module/participation/participation.route";
 import { SubmissionRouter } from "../module/submission/sumission.route";
 import { PaymentRouter } from "../module/payment/payment.route";
+import { BlogRouter } from "../module/blog/blog.route";
+import { BlogLikeRouter } from "../module/blogLike/blogLike.route";
+import { BlogCommentRouter } from "../module/blogComment/blogComment.route";
 
 export const router = Router();
 const ProjectRoutes = [
@@ -31,6 +34,18 @@ const ProjectRoutes = [
   {
     path: "/payment",
     routes: PaymentRouter
+  },
+  {
+    path: "/blog",
+    routes: BlogRouter
+  },
+  {
+    path: "/blog-like",
+    routes: BlogLikeRouter
+  },
+  {
+    path: "/blog-comment",
+    routes: BlogCommentRouter
   }
 ]
 

@@ -146,11 +146,49 @@ const updateUserRoleIntoDB = async (
 
 
 
+const deleteUserIntoDB = async (
+  id: string
+) => {
+
+  //! If User Exists in database
+  const user = await User.findById({
+    _id: id
+  })
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User not found")
+  }
+
+  //! If User is Deleted
+  const isDeleted = user?.isDeleted;
+
+  if (isDeleted) {
+    throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted !');
+  }
+
+  //! checking if the user is blocked
+  const userStatus = user?.status;
+
+  if (userStatus === 'blocked') {
+    throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
+  }
+
+  const result = await User.findByIdAndUpdate(
+    { _id: id },
+    { isDeleted: true },
+    {
+      new: true,
+    },
+  );
+  return result;
+};
+
 
 export const ServicesUsers = {
   getAllUserIntoDB,
   getMeIntoDB,
   changeStatusIntoDB,
   updateUserIntoDB,
-  updateUserRoleIntoDB
+  updateUserRoleIntoDB,
+  deleteUserIntoDB
 }

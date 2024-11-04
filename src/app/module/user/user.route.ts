@@ -25,6 +25,11 @@ router
     ValidationRequestSchema(ValidationUser.updateUserRoleValidation),
     ControllersUsers.updateUserRoleFromDB,
   )
+  .delete(
+    '/:id',
+    auth("admin"),
+    ControllersUsers.deleteUserFromDB,
+  )
   //! Get All User
   .get("/",
     auth("admin"),

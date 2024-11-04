@@ -18,6 +18,31 @@ const createContestFromDB = CatchAsyncPromise(
   }
 )
 
+
+const updateContestFromDB = CatchAsyncPromise(async (req, res, next) => {
+  const { role, userId } = req.user as JwtPayload;
+  const { id } = req.params;
+  const result = await ContestServices.updateContestIntoDB(role, userId, id, req.body);
+  ResponseSend(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Contest updated successfully",
+    data: result,
+  });
+});
+
+const deleteContestFromDB = CatchAsyncPromise(async (req, res, next) => {
+  const { role, userId } = req.user as JwtPayload;
+  const { id } = req.params;
+  await ContestServices.deleteContestIntoDB(role, userId, id);
+  ResponseSend(res, {
+    success: true,
+    statusCode: httpStatus.NO_CONTENT,
+    message: "Contest deleted successfully",
+    data: null,
+  });
+});
+
 const getAllContestsFromDB = CatchAsyncPromise(
   async (req, res, next) => {
     const { role, userId } = req.user as JwtPayload;
@@ -50,5 +75,7 @@ const getContestsParticipationFromDB = CatchAsyncPromise(
 export const ContestControllers = {
   createContestFromDB,
   getAllContestsFromDB,
-  getContestsParticipationFromDB
+  getContestsParticipationFromDB,
+  updateContestFromDB,
+  deleteContestFromDB
 }

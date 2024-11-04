@@ -1,7 +1,6 @@
 import { Types } from "mongoose";
 
 export interface TContest {
-  _id: string;
   title: string;
   userId: Types.ObjectId;
   prize: string;
@@ -10,8 +9,6 @@ export interface TContest {
   tags: string[];
   requirements: string;
   deadline: string;
-  participantsID?: Types.ObjectId[]
+  participantsID?: Types.ObjectId[];
   winnerId: string;
-  createAt: Date;
-  updatedAt: Date;
 }
