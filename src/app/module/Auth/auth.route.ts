@@ -53,7 +53,4 @@ router
     UserControllers.resetPassword,
   )
 
-  //! Get All User
-  // .get("/", auth("admin"), UserControllers.getAllUser)
-
 export const AuthRouter = router;

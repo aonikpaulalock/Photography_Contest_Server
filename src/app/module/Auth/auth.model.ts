@@ -20,10 +20,6 @@ const UserSchema = new Schema<TUser, UserModel>({
     type: String,
     required: true
   },
-  // needsPasswordChange: {
-  //   type: Boolean,
-  //   default: false
-  // }, // This could be a password reset field
   role: {
     type: String,
     enum: userRole,

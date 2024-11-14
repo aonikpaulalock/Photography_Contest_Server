@@ -61,8 +61,8 @@ const loginUserIntoDB = async (
   }
   //! Create Jwt Payload
   const secretPayload = {
-    userId: user?._id, // User's _id
-    role: user?.role,               // User's role
+    userId: user?._id,
+    role: user?.role, 
     email: user?.email,
   }
 
