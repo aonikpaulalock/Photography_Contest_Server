@@ -1,4 +1,4 @@
-# Course_Review_Auth_Management Project Instructions
+# Photography Contest Project Instructions
 
 ### How to run locally this project locally
 
@@ -9,11 +9,11 @@
 
 ### Clone Project
 
-`git clone https://github.com/Porgramming-Hero-web-course/l2b2a4-course-review-with-auth-aonikpaulalock`
+`git clone https://github.com/aonikpaulalock/Photography_Contest_Server.git`
 
 ### Go to the project directory
 
-`cd course-review-with-auth`
+`cd Photography_Contest_Server`
 
 ### Install dependencies
 
@@ -51,57 +51,6 @@
 - Endpoint: `http://localhost:<Your_Port>/auth/change-password`
 - Authentication: Requires user or admin authentication.
 - Description: Change the password for the authenticated user. validates user password.
-
-## Create a Course
-
-- Methods:Post
-- Endpoint:`http://localhost:<Your_Port>/api/course`
-- Authentication : Required to admin authentication token.
-- Description: Create a new course by providing valid course information.
-
-### Get Paginated and Filtered Courses.
-
-- Method: GET
-- Endpoint:`http://localhost:<Your_Port>/api/course`
-- Description: Retrieve a list of all available courses in the system and search,filter,pagination etc.
-
-### Create a Category
-
-- Method: POST
-- Endpoint:`http://localhost:<Your_Port>/api/categories`
-- Authentication: Requires admin authentication.
-- Description: Create a new category by providing valid category information and validates input.
-
-### Get All Categories
-
-- Method: GET
-- Endpoint: `http://localhost:<Your_Port>/api/categories`
-- Description: Retrieve a list of all available categories in the system.
-
-### Create a Review
-
-- Method: POST
-- Endpoint:`http://localhost:<Your_Port>/api/reviews`
-- Authentication: Requires user authentication
-- Description: Create a new review by submitting valid review data. The endpoint is protected, and the user must be authenticated.
-
-### Update a Course (Partial Update with Dynamic Update)
- - Method: PUT
- - Endpoint: `http://localhost:<Your_Port>/api/courses/:courseId`
- - Authentication: Requires admin authentication.
- - Description: Update details of a specific course identified by courseId. The endpoint is protected and can only be accessed by admin. The provided data is validated, upon successful validation and updates to the specified course.
-
-
-### Get Course by ID with Reviews
-- Method: GET
-- Endpoint: `http://localhost:<Your_Port>/api/courses/:courseId/reviews`
-- Description: Retrieve details of a specific course along with its associated reviews. The endpoint allows fetching reviews related to a specific course identified by courseId.
-
-
-### Get the Best Course Based on Average Review (Rating)
-- Method: GET
-- Endpoint: `http://localhost:<Your_Port>/api/course/best`
-- Description: Retrieve the best course based on the average review rating. This endpoint allows users to get information about the course that has received the highest average reviews.
 
 
 ❤️ Happy Coding
