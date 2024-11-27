@@ -39,7 +39,7 @@ const loginUser = CatchAsyncPromise(
 
 const changePassword = CatchAsyncPromise(
   async (req, res, next) => {
-    const userId = req.user._id
+    const userId = req.user?.userId
     const result = await UserServices.changePasswordIntoDB(userId, req.body)
 
     ResponseSend(res, {

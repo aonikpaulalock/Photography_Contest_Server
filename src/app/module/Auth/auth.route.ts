@@ -38,14 +38,14 @@ router
     ValidationRequestSchema(UserValidations.refreshTokenValidationSchema),
     UserControllers.refreshToken,
   )
-  
-.post(
+
+  .post(
     '/forget-password',
     auth("user", "contestHolder", "admin"),
     ValidationRequestSchema(UserValidations.forgetPasswordValidationSchema),
     UserControllers.forgetPassword,
   )
-  
+
   .post(
     '/reset-password',
     auth("user", "contestHolder", "admin"),
