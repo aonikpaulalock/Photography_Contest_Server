@@ -75,13 +75,12 @@ const forgetPassword = CatchAsyncPromise(async (req, res) => {
 });
 
 const resetPassword = CatchAsyncPromise(async (req, res) => {
-  const token = (req?.headers?.authorization) as string;
-
+  const token = req.headers?.authorization || "";
   const result = await UserServices.resetPasswordIntoDB(req.body, token);
   ResponseSend(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Password reset succesful!',
+    message: 'Password reset succesfuly!',
     data: result,
   });
 });

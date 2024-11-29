@@ -34,21 +34,18 @@ router
 
   .post(
     '/refresh-token',
-    auth("user", "contestHolder", "admin"),
     ValidationRequestSchema(UserValidations.refreshTokenValidationSchema),
     UserControllers.refreshToken,
   )
 
   .post(
     '/forget-password',
-    auth("user", "contestHolder", "admin"),
     ValidationRequestSchema(UserValidations.forgetPasswordValidationSchema),
     UserControllers.forgetPassword,
   )
 
   .post(
     '/reset-password',
-    auth("user", "contestHolder", "admin"),
     ValidationRequestSchema(UserValidations.resetPasswordValidationSchema),
     UserControllers.resetPassword,
   )

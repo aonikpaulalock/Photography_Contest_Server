@@ -166,8 +166,8 @@ const refreshTokenIntoDB = async (token: string) => {
   }
 
   const jwtPayload = {
-    userId: user?._id, // User's _id
-    role: user?.role,               // User's role
+    userId: user?._id,
+    role: user?.role,
     email: user?.email,
   };
 
@@ -217,7 +217,17 @@ const forgetPasswordIntoDB = async (email: string) => {
 
   const resetUILink = `${config.reset_password_link}?userId=${user._id}&token=${resetToken}` as string;
 
-  sendEmail(user.email, resetUILink);
+  await sendEmail(user.email,
+    `
+        <div>
+        <h2>Dear ${user?.username},</h2>
+        <h4>Your reset password link and reset it before 10 minutes.</h4>
+            <a href=${resetUILink}>
+            ${resetUILink}
+            </a>
+        </div>
+        `
+  );
 
 };
 
@@ -230,7 +240,6 @@ const resetPasswordIntoDB = async (
 ) => {
   // checking if the user is exist
   const user = await User.findById(payload?.userId);
-
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
   }
@@ -252,9 +261,6 @@ const resetPasswordIntoDB = async (
     token,
     config.jwt_access_secret as string,
   ) as JwtPayload;
-
-  //localhost:3000?id=A-0001&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBLTAwMDEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDI4NTA2MTcsImV4cCI6MTcwMjg1MTIxN30.-T90nRaz8-KouKki1DkCSMAbsHyb9yDi0djZU3D6QO4
-
   if (payload?.userId !== decoded?.userId) {
     throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden!');
   }
@@ -267,8 +273,7 @@ const resetPasswordIntoDB = async (
 
   await User.findOneAndUpdate(
     {
-      _id: decoded.userId,
-      role: decoded.role,
+      _id: payload?.userId,
     },
     {
       password: newHashedPassword
