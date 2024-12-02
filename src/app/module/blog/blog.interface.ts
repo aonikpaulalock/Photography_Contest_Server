@@ -5,5 +5,5 @@ export interface TBlog {
   content: string;
   userId: Types.ObjectId;
   blogPhoto?: string;
-  tags: string[];
+  // tags: string[];
 }

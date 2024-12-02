@@ -25,10 +25,17 @@ const getAllBlogIntoDB = async (
   };
 };
 
-const getSingleBlogIntoDB = async (userId: string) => {
-  const result = await Blog.find({ userId })
-    .populate("userId")
-    .sort({ createdAt: -1 });
+const getSingleBlogIntoDB = async (blogId: string) => {
+  const result = await Blog.findById(blogId);
+  return result;
+};
+
+const getUserBlogIntoDB = async (userId: string) => {
+  const result = await Blog.find({
+    userId
+  })
+  .populate("userId")
+  .sort({ createdAt: -1 });
   return result;
 };
 
@@ -52,6 +59,7 @@ export const BlogServices = {
   createBlogIntoDB,
   getAllBlogIntoDB,
   getSingleBlogIntoDB,
+  getUserBlogIntoDB,
   deleteBlogIntoDB,
   updateBlogIntoDB
 }

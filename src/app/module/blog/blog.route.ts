@@ -14,8 +14,11 @@ router
   .get("/",
     BlogControllers.getAllBlogFromDB
   )
-  .get("/:userId",
+  .get("/:blogId",
     BlogControllers.getSingleBlogFromDB
+  )
+  .get("/userBlog/:userId",
+    BlogControllers.getUserBlogFromDB
   )
   .delete("/:blogId",
     BlogControllers.deleteBlogFromDB

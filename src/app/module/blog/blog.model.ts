@@ -19,7 +19,7 @@ const BlogSchema: Schema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'User', required: true
   },
-  tags: [{ type: String }],
+  // tags: [{ type: String }],
 }, {
   timestamps: true,
 });

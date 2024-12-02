@@ -27,8 +27,7 @@ export const auth = (...userRole: TUserRole[]) => {
           config.jwt_access_secret as string,
         ) as JwtPayload;
       } catch (error) {
-        console.log("Error decoding token:", error);
-        throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized! lolo');
+        throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
       }
       const { email } = decoded as JwtPayload
       // //! If User Exists in database

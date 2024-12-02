@@ -7,7 +7,7 @@ const createBlogValidation = z.object({
     content: z.string(),
     blogPhoto: z.string().optional(),
     userId: z.string(),
-    tags: z.array(z.string()).optional(),
+    // tags: z.array(z.string()).optional(),
   })
 })
 

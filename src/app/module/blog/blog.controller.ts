@@ -29,12 +29,23 @@ const getAllBlogFromDB = CatchAsyncPromise(async (req, res) => {
 });
 
 const getSingleBlogFromDB = CatchAsyncPromise(async (req, res) => {
-  const { userId } = req.params;
-  const result = await BlogServices.getSingleBlogIntoDB(userId);
+  const { blogId } = req.params;
+  const result = await BlogServices.getSingleBlogIntoDB(blogId)
   ResponseSend(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "Single blog are retrieved successfully",
+    message: "Single blog are retrive successfully",
+    data: result,
+  });
+});
+
+const getUserBlogFromDB = CatchAsyncPromise(async (req, res) => {
+  const { userId } = req.params;
+  const result = await BlogServices.getUserBlogIntoDB(userId);
+  ResponseSend(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User blog are retrieved successfully",
     data: result,
   });
 });
@@ -65,6 +76,7 @@ const updateBlogFromDB = CatchAsyncPromise(async (req, res) => {
 export const BlogControllers = {
   createBlogFromDB,
   getAllBlogFromDB,
+  getUserBlogFromDB,
   getSingleBlogFromDB,
   deleteBlogFromDB,
   updateBlogFromDB
