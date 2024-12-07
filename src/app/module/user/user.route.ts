@@ -13,7 +13,7 @@ router
     ValidationRequestSchema(ValidationUser.changeStatusValidationSchema),
     ControllersUsers.changeStatusFromDB
   )
-  .patch(
+  .put(
     '/:id',
     auth("user", "contestHolder", "admin"),
     ValidationRequestSchema(UserValidations.updateUserValidation),

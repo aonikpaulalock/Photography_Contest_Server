@@ -30,13 +30,20 @@ const getSingleBlogIntoDB = async (blogId: string) => {
   return result;
 };
 
-const getUserBlogIntoDB = async (userId: string) => {
-  const result = await Blog.find({
-    userId
-  })
-  .populate("userId")
-  .sort({ createdAt: -1 });
-  return result;
+const getUserBlogIntoDB = async (userId: string, query: Record<string, unknown>) => {
+  const BlogQuery = new QueryBuilder(
+    Blog.find({
+      userId
+    })
+      .populate("userId"),
+    query
+  ).paginate();
+  const result = await BlogQuery.modelQuery;
+  const meta = await BlogQuery.countTotal();
+  return {
+    result,
+    meta,
+  };
 };
 
 const deleteBlogIntoDB = async (blogId: string) => {

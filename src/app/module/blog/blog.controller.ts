@@ -41,13 +41,14 @@ const getSingleBlogFromDB = CatchAsyncPromise(async (req, res) => {
 
 const getUserBlogFromDB = CatchAsyncPromise(async (req, res) => {
   const { userId } = req.params;
-  const result = await BlogServices.getUserBlogIntoDB(userId);
-  ResponseSend(res, {
+  const result = await BlogServices.getUserBlogIntoDB(userId, req.query);
+  res.status(200).json({
     success: true,
     statusCode: httpStatus.OK,
     message: "User blog are retrieved successfully",
-    data: result,
-  });
+    meta: result.meta,
+    data: result.result,
+  })
 });
 
 const deleteBlogFromDB = CatchAsyncPromise(async (req, res) => {
