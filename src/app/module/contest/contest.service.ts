@@ -79,6 +79,11 @@ const deleteContestIntoDB = async (
 
 };
 
+const getSingleContestIntoDB = async (contestId: string) => {
+  const result = await Contest.findById(contestId);
+  return result;
+};
+
 const getAllContestsIntoDB = async (
   role: string,
   userId: string,
@@ -129,6 +134,7 @@ const getContestsParticipationIntoDB = async (id: string) => {
 export const ContestServices = {
   createContestIntoDB,
   getAllContestsIntoDB,
+  getSingleContestIntoDB,
   getContestsParticipationIntoDB,
   updateContestIntoDB,
   deleteContestIntoDB

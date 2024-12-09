@@ -19,10 +19,21 @@ const createContestFromDB = CatchAsyncPromise(
 )
 
 
+const getSingleContestFromDB = CatchAsyncPromise(async (req, res, next) => {
+  const { contestId } = req.params;
+  const result = await ContestServices.getSingleContestIntoDB(contestId);
+  ResponseSend(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Contest retrive successfully",
+    data: result,
+  });
+});
+
 const updateContestFromDB = CatchAsyncPromise(async (req, res, next) => {
   const { role, userId } = req.user as JwtPayload;
-  const { id } = req.params;
-  const result = await ContestServices.updateContestIntoDB(role, userId, id, req.body);
+  const { contestId } = req.params;
+  const result = await ContestServices.updateContestIntoDB(role, userId, contestId, req.body);
   ResponseSend(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -74,6 +85,7 @@ const getContestsParticipationFromDB = CatchAsyncPromise(
 
 export const ContestControllers = {
   createContestFromDB,
+  getSingleContestFromDB,
   getAllContestsFromDB,
   getContestsParticipationFromDB,
   updateContestFromDB,

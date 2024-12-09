@@ -14,7 +14,7 @@ router
     ContestControllers.createContestFromDB
   )
   .put(
-    "/:id",
+    "/:contestId",
     auth("admin", "contestHolder"),
     ValidationRequestSchema(ContestValidations.updateContestValidation),
     ContestControllers.updateContestFromDB
@@ -23,6 +23,9 @@ router
     "/:id",
     auth("admin", "contestHolder"),
     ContestControllers.deleteContestFromDB
+  )
+  .get("/:contestId",
+    ContestControllers.getSingleContestFromDB
   )
   .get(
     "/",
