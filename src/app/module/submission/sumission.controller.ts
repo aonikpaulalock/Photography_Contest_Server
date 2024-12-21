@@ -18,14 +18,91 @@ const createSubmissionFromDB = CatchAsyncPromise(
   }
 )
 
+const updateSubmissionFromDB = CatchAsyncPromise(async (req, res) => {
+  const { submissionId } = req.params;
+  const result = await SubmissionServices.updateSubmissionIntoDB(submissionId, req.body);
+  ResponseSend(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Submission updated successfully",
+    data: result,
+  });
+});
+
+const deleteSubmissionFromDB = CatchAsyncPromise(async (req, res) => {
+  const { submissionId } = req.params;
+  const result = await SubmissionServices.deleteSubmissionIntoDB(submissionId)
+  ResponseSend(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Submission deleted successfully",
+    data: result,
+  });
+});
+
+
+const getSingleSubmissionFromDB = CatchAsyncPromise(async (req, res) => {
+  const { submissionId } = req.params;
+  const result = await SubmissionServices.getSingleSubmissionIntoDB
+    (submissionId)
+  ResponseSend(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Single submission are retrive successfully",
+    data: result,
+  });
+});
+
 const getSubmissionUsersFromDB = CatchAsyncPromise(
   async (req, res, next) => {
-    const { role, userId } = req.user as JwtPayload;
-    const result = await SubmissionServices.getSubmissionUsersIntoDB(role, userId, req.query)
+    const { userId } = req.user as JwtPayload;
+    const result = await SubmissionServices.getSubmissionUsersIntoDB(userId, req.query)
     res.status(200).json({
       success: true,
       statusCode: httpStatus.OK,
-      message: "Contest retrieved successfully",
+      message: "User submission are retrieved successfully !",
+      meta: result?.meta,
+      data: result?.result,
+    }
+    )
+  }
+)
+const getSubmissionContestHolderAndAdminFromDB = CatchAsyncPromise(
+  async (req, res, next) => {
+    const { userId } = req.user as JwtPayload;
+    const result = await SubmissionServices.getSubmissionContestHolderAndAdminIntoDB(userId, req.query)
+    res.status(200).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "ContestHolder submission are retrieved successfully !",
+      meta: result?.meta,
+      data: result?.result,
+    }
+    )
+  }
+)
+
+const getManageSubmissionFromDB = CatchAsyncPromise(
+  async (req, res, next) => {
+    const result = await SubmissionServices.getManageSubmissionIntoDB(req.query)
+    res.status(200).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Manage submission are retrieved successfully !",
+      meta: result?.meta,
+      data: result?.result,
+    }
+    )
+  }
+)
+const getSubmissionsByContestIdFromDB = CatchAsyncPromise(
+  async (req, res, next) => {
+    const { contestId } = req.params;
+    const result = await SubmissionServices.getSubmissionsByContestIdIntoDB(contestId, req.query)
+    res.status(200).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Contest submission are retrieved successfully !",
       meta: result?.meta,
       data: result?.result,
     }
@@ -35,5 +112,11 @@ const getSubmissionUsersFromDB = CatchAsyncPromise(
 
 export const SubmissionControllers = {
   createSubmissionFromDB,
-  getSubmissionUsersFromDB
+  updateSubmissionFromDB,
+  deleteSubmissionFromDB,
+  getSingleSubmissionFromDB,
+  getSubmissionUsersFromDB,
+  getSubmissionContestHolderAndAdminFromDB,
+  getManageSubmissionFromDB,
+  getSubmissionsByContestIdFromDB
 }

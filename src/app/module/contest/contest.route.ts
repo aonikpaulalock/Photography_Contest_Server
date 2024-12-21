@@ -28,14 +28,14 @@ router
     ContestControllers.getSingleContestFromDB
   )
   .get(
-    "/",
-    auth("admin", "contestHolder"),
-    ContestControllers.getAllContestsFromDB
-  )
-  .get(
     "/:id/participants",
     auth("admin", "contestHolder"),
     ContestControllers.getContestsParticipationFromDB
+  )
+  .get(
+    "/",
+    auth("admin", "contestHolder", "user"),
+    ContestControllers.getAllContestsFromDB
   )
 
 export const ContestRouter = router;

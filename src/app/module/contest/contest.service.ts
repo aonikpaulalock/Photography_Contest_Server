@@ -89,12 +89,11 @@ const getAllContestsIntoDB = async (
   userId: string,
   query: Record<string, unknown>
 ) => {
-
   if (role === 'contestHolder') {
     const adminQuery = new QueryBuilder(
       Contest.find({ userId }),
       query
-    ).paginate()
+    ).paginate();
 
     const result = await adminQuery.modelQuery;
     const meta = await adminQuery.countTotal();
@@ -105,10 +104,10 @@ const getAllContestsIntoDB = async (
   }
 
   if (role === 'admin') {
-    const adminQuery = new QueryBuilder(Contest.find({
-      userId
-    }), query)
-      .paginate()
+    const adminQuery = new QueryBuilder(
+      Contest.find({ userId }),
+      query
+    ).paginate();
 
     const result = await adminQuery.modelQuery;
     const meta = await adminQuery.countTotal();
@@ -117,7 +116,18 @@ const getAllContestsIntoDB = async (
       meta,
     };
   }
-}
+
+  // Allow normal users to view all contests
+  const userQuery = new QueryBuilder(Contest.find(), query).paginate();
+
+  const result = await userQuery.modelQuery;
+  const meta = await userQuery.countTotal();
+  return {
+    result,
+    meta,
+  };
+};
+
 
 
 const getContestsParticipationIntoDB = async (id: string) => {

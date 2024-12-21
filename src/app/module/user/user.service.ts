@@ -6,7 +6,9 @@ import { User } from "../Auth/auth.model";
 import { allowedFields, UpdatableFields, UserSearchableFields } from "./user.constant";
 
 const getAllUserIntoDB = async (query: Record<string, unknown>) => {
-  const adminQuery = new QueryBuilder(User.find(), query)
+  const adminQuery = new QueryBuilder(User.find({
+    isDeleted: false
+  }), query)
     .search(UserSearchableFields)
     .filter()
     .sort()

@@ -33,10 +33,42 @@ router
     ValidationRequestSchema(SubmissionValidations.createSubmissionValidation),
     SubmissionControllers.createSubmissionFromDB
   )
+
   .get(
-    "/",
-    auth("user", "admin", "contestHolder"),
+    "/user-submission",
+    auth("user"),
     SubmissionControllers.getSubmissionUsersFromDB
+  )
+  .get(
+    "/contestHolder-submission",
+    auth("contestHolder","admin"),
+    SubmissionControllers.getSubmissionContestHolderAndAdminFromDB
+  )
+  .get(
+    "/manage-submission",
+    auth("admin"),
+    SubmissionControllers.getManageSubmissionFromDB
+  )
+  .put(
+    "/:submissionId",
+    auth("user", "admin", "contestHolder"),
+    SubmissionControllers.updateSubmissionFromDB
+  )
+  .delete(
+    "/:submissionId",
+    auth("user", "admin", "contestHolder"),
+    SubmissionControllers.deleteSubmissionFromDB
+  )
+  
+  .get(
+    "/:submissionId",
+    auth("user", "admin", "contestHolder"),
+    SubmissionControllers.getSingleSubmissionFromDB
+  )
+  .get(
+    "/:contestId/submission",
+    auth("admin","contestHolder"),
+    SubmissionControllers.getSubmissionsByContestIdFromDB
   )
 
 export const SubmissionRouter = router;

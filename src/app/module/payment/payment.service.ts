@@ -64,7 +64,8 @@ const validatePaymentIntoDB = async (payload: any) => {
   //  if (response.status !== "VALID") {
   //    throw new AppError(httpStatus.BAD_REQUEST, "Payment validation failed");
   //  }
-  const response = payload
+  const response = payload;
+  console.log(response)
 
   const session = await mongoose.startSession();
   session.startTransaction();
