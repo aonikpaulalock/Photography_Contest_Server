@@ -38,6 +38,11 @@ router
   .get('/me',
     auth("user", "contestHolder", "admin"),
     ControllersUsers.getMeFromDB
-  );
+  )
+  .get(
+    '/:userId',
+    auth("admin"),
+    ControllersUsers.getSingleUserFromDB,
+  )
 
 export const UserRoute = router;

@@ -186,11 +186,20 @@ const deleteUserIntoDB = async (
 };
 
 
+const getSingleUserIntoDB = async (
+  userId: string
+) => {
+
+  const result = await User.findById(userId)
+  return result
+};
+
 export const ServicesUsers = {
   getAllUserIntoDB,
   getMeIntoDB,
   changeStatusIntoDB,
   updateUserIntoDB,
   updateUserRoleIntoDB,
-  deleteUserIntoDB
+  deleteUserIntoDB,
+  getSingleUserIntoDB
 }

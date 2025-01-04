@@ -69,15 +69,40 @@ const getAllContestsFromDB = CatchAsyncPromise(
   }
 )
 
+const manageContestsFromDB = CatchAsyncPromise(
+  async (req, res, next) => {
+    const result = await ContestServices.manageContestsIntoDB(req.query)
+    res.status(200).json({
+      success: true,
+      statusCode: httpStatus.OK,
+      message: "Manage contest retrieved successfully",
+      meta: result?.meta,
+      data: result?.result,
+    }
+    )
+  }
+)
+
+
 const getContestsParticipationFromDB = CatchAsyncPromise(
   async (req, res, next) => {
-    const { id } = req.params;
-    const result = await ContestServices.getContestsParticipationIntoDB(id)
+    const { contestId } = req.params;
+    const { page = 1, limit = 10 } = req.query;
+    const result = await ContestServices.getContestsParticipationIntoDB(
+      contestId,
+      Number(page),
+      Number(limit)
+    )
     res.status(200).json({
       success: true,
       statusCode: httpStatus.OK,
       message: "Contest participation retrieved successfully",
-      data: result
+      meta: {
+        page: Number(page),
+        limit: Number(limit),
+        totalParticipants: result.totalParticipants,
+      },
+      data: result.data,
     }
     )
   }
@@ -89,5 +114,6 @@ export const ContestControllers = {
   getAllContestsFromDB,
   getContestsParticipationFromDB,
   updateContestFromDB,
+  manageContestsFromDB,
   deleteContestFromDB
 }

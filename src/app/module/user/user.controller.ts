@@ -59,6 +59,18 @@ const updateUserFromDB = CatchAsyncPromise(async (req, res) => {
   });
 });
 
+const getSingleUserFromDB = CatchAsyncPromise(async (req, res) => {
+  const { userId } = req.params;
+  const result = await ServicesUsers.getSingleUserIntoDB( userId);
+
+  ResponseSend(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'User is retrive succesfully',
+    data: result,
+  });
+});
+
 const updateUserRoleFromDB = CatchAsyncPromise(async (req, res) => {
   const { id } = req.params;
   const { role } = req.body; 
@@ -93,5 +105,6 @@ export const ControllersUsers = {
   changeStatusFromDB,
   updateUserFromDB,
   updateUserRoleFromDB,
+  getSingleUserFromDB,
   deleteUserFromDB
 }

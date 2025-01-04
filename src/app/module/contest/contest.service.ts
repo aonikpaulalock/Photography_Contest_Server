@@ -80,7 +80,7 @@ const deleteContestIntoDB = async (
 };
 
 const getSingleContestIntoDB = async (contestId: string) => {
-  const result = await Contest.findById(contestId);
+  const result = await Contest.findById(contestId).populate("userId");
   return result;
 };
 
@@ -129,17 +129,50 @@ const getAllContestsIntoDB = async (
 };
 
 
+const manageContestsIntoDB = async (
+  query: Record<string, unknown>
+) => {
+  const manageAdminQuery = new QueryBuilder(Contest.find(), query).paginate();
 
-const getContestsParticipationIntoDB = async (id: string) => {
-  const result = await Contest.findById(id).populate('participantsID');
-  if (!result) {
-    throw new AppError(
-      httpStatus.NOT_FOUND,
-      'Contest not found'
-    );
+  const result = await manageAdminQuery.modelQuery;
+  const meta = await manageAdminQuery.countTotal();
+  return {
+    result,
+    meta,
+  };
+};
+
+
+const getContestsParticipationIntoDB = async (
+  contestId: string,
+  page: number = 1,
+  limit: number = 10
+) => {
+  const skip = (page - 1) * limit;
+
+  const contest = await Contest.findById(contestId).populate({
+    path: "participantsID",
+    options: {
+      limit: limit,
+      skip: skip,
+    },
+  });
+
+  if (!contest) {
+    throw new AppError(httpStatus.NOT_FOUND, "Contest not found");
   }
-  return result
-}
+
+  const totalParticipants = await Contest.aggregate([
+    { $match: { _id: contest._id } },
+    { $project: { totalParticipants: { $size: "$participantsID" } } },
+  ]);
+
+  return {
+    data: contest,
+    totalParticipants: totalParticipants?.[0]?.totalParticipants || 0,
+  };
+};
+
 
 export const ContestServices = {
   createContestIntoDB,
@@ -147,5 +180,6 @@ export const ContestServices = {
   getSingleContestIntoDB,
   getContestsParticipationIntoDB,
   updateContestIntoDB,
+  manageContestsIntoDB,
   deleteContestIntoDB
 }

@@ -12,7 +12,7 @@ const createUserIntoDB = async (payload: TUser) => {
   const result = await User.create(payload);
   // Abcdef11  ---- user
   // Abcdef12  ---- user
-  // Abcdef13  ---- user
+  // Abcdef13  ---- user --- secondUserPass
   // Abcdef14  ---- user
   // Password8 ----- contestHolder
   // Password9 ----- contestHolder
