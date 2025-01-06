@@ -39,8 +39,7 @@ const paymentInitIntoDB = async (
   };
 
   //! Payment ডেটাবেসে নতুন রেকর্ড তৈরি করুন
-  const newPayment = new Payment(paymentInfo);
-  await newPayment.save();
+  const newPayment = await Payment.create(paymentInfo);
 
   // SSL পেমেন্ট ইনিশিয়ালাইজ করুন
   const paymentObj = {
@@ -51,9 +50,10 @@ const paymentInitIntoDB = async (
     country: participant.country,
   };
 
+
   const result = await sslServices.initPayment(paymentObj);
   return {
-    paymentUrl: result.GatewayPageURL,
+    paymentUrl: result?.GatewayPageURL,
   };
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

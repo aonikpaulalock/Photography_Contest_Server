@@ -3,8 +3,9 @@ import config from "../../config";
 import AppError from "../../../utils/AppError";
 import httpStatus from "http-status";
 import { TPaymentInit } from "../payment/payment.interface";
-
+import https from "https";
 const initPayment = async (paymentInfo: TPaymentInit) => {
+  console.log(paymentInfo)
   try {
     const data = {
       store_id: config.store_id,
@@ -39,18 +40,23 @@ const initPayment = async (paymentInfo: TPaymentInit) => {
       ship_country: 'Bangladesh',
     };
 
+    const agent = new https.Agent({
+      rejectUnauthorized: false,
+    });
+
     const response = await axios({
       method: "post",
       url: config.transaction_api,
       data: data,
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
-      }
+      },
+      httpsAgent: agent,
     })
-
     return response.data
   }
   catch (error) {
+    console.log(error)
     throw new AppError(
       httpStatus.BAD_REQUEST,
       "Invalid Payment"

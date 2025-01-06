@@ -24,6 +24,17 @@ const TestingRouteController = async (req: Request, res: Response) => {
   })
 };
 
+//! payment redirect sucess or failed message
+app.post("/success", (req, res) => {
+  res.redirect("http://localhost:5173/payment-success");
+});
+
+// SSLCommerz FAIL Callback
+app.post("/fail", (req, res) => {
+  res.redirect("http://localhost:5173/payment-failed");
+});
+
+
 app.get("/", TestingRouteController)
 
 
