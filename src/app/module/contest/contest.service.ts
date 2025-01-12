@@ -3,7 +3,7 @@ import AppError from "../../../utils/AppError";
 import QueryBuilder from "../../builder/QueryBuilder";
 import { TContest } from "./contest.interface";
 import Contest from "./contest.model";
-import { contestAllowedFields, contestUpdatableFields } from "./contest.constant";
+import { contestAllowedFields, ContestSearchableFields, contestUpdatableFields } from "./contest.constant";
 
 const createContestIntoDB = async (payload: TContest) => {
   const result = await Contest.create(payload);
@@ -132,7 +132,10 @@ const getAllContestsIntoDB = async (
 const manageContestsIntoDB = async (
   query: Record<string, unknown>
 ) => {
-  const manageAdminQuery = new QueryBuilder(Contest.find(), query).paginate();
+  const manageAdminQuery = new QueryBuilder(Contest.find().populate("userId"), query)
+  .paginate()
+  .filter()
+  .search(ContestSearchableFields);
 
   const result = await manageAdminQuery.modelQuery;
   const meta = await manageAdminQuery.countTotal();

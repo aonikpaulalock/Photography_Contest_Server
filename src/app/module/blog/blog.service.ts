@@ -26,7 +26,7 @@ const getAllBlogIntoDB = async (
 };
 
 const getSingleBlogIntoDB = async (blogId: string) => {
-  const result = await Blog.findById(blogId);
+  const result = await Blog.findById(blogId).populate("userId");
   return result;
 };
 

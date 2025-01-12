@@ -5,7 +5,6 @@ import httpStatus from "http-status";
 import { TPaymentInit } from "../payment/payment.interface";
 import https from "https";
 const initPayment = async (paymentInfo: TPaymentInit) => {
-  console.log(paymentInfo)
   try {
     const data = {
       store_id: config.store_id,
@@ -56,7 +55,6 @@ const initPayment = async (paymentInfo: TPaymentInit) => {
     return response.data
   }
   catch (error) {
-    console.log(error)
     throw new AppError(
       httpStatus.BAD_REQUEST,
       "Invalid Payment"

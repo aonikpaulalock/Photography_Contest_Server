@@ -170,48 +170,11 @@ const updateSubmissionIntoDB = async (
 };
 
 const getSingleSubmissionIntoDB = async (submissionId: string) => {
-  const result = await Submission.findById(submissionId);
+  const result = await Submission.findById(submissionId)
+    .populate('contestId userId');
   return result;
 };
 
-// const getSubmissionUsersIntoDB = async (
-//   role: string,
-//   userId: string,
-//   query: Record<string, unknown>
-// ) => {
-//   if (role === "user") {
-//     const userQuery = new QueryBuilder(
-//       Submission.find({ userId })
-//         .populate('contestId').lean(),
-//       query
-//     ).fields().paginate()
-
-//     const result = await userQuery.modelQuery;
-//     const meta = await userQuery.countTotal();
-//     return {
-//       result,
-//       meta,
-//     }
-//   } else if (role === "admin" || role === "contestHolder") {
-//     const contestId = query?.contestId as string;
-
-//     const adminQuery = new QueryBuilder(
-//       Submission.find({
-//         contestId: contestId
-//       })
-//         .populate("userId", "username email")
-//         .lean(),
-//       query
-//     ).fields().paginate();
-
-//     const result = await adminQuery.modelQuery;
-//     const meta = await adminQuery.countTotal();
-//     return {
-//       result,
-//       meta,
-//     };
-//   }
-// }
 
 const getSubmissionUsersIntoDB = async (
   userId: string,

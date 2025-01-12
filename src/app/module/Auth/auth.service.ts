@@ -10,10 +10,10 @@ import config from "../../config";
 
 const createUserIntoDB = async (payload: TUser) => {
   const result = await User.create(payload);
-  // Abcdef11  ---- user
+  // Abcdef11  ---- user --- alock
   // Abcdef12  ---- user
-  // Abcdef13  ---- user --- secondUserPass
-  // Abcdef14  ---- user
+  // Abcdef13  ---- user --- shankar
+  // Abcdef14  ---- user --- nikil
   // Password8 ----- contestHolder
   // Password9 ----- contestHolder
   // Qwerty89 ------ admin

@@ -18,3 +18,11 @@ export type contestUpdatableFields = Pick<
   'requirements' |
   'deadline'
 >;
+
+export const ContestSearchableFields = [
+  'title',
+  'prize',
+  'status',
+  'paymentStatus',
+  'requirements',
+];
