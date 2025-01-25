@@ -15,7 +15,6 @@ router
   )
   .get(
     "/manage-contest",
-    auth("admin", "user", "contestHolder"),
     ContestControllers.manageContestsFromDB
   )
   .put(
