@@ -10,7 +10,9 @@ const app: Application = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: ['http://localhost:5173'],
+  // "https://photography-frontend-eta.vercel.app"
+  // ['http://localhost:5173']
+  origin: "https://photography-frontend-eta.vercel.app",
   credentials: true
 }));
 
@@ -24,14 +26,16 @@ const TestingRouteController = async (req: Request, res: Response) => {
   })
 };
 
+// "http://localhost:5173/payment-success"
+// "http://localhost:5173/payment-failed"
 //! payment redirect sucess or failed message
 app.post("/success", (req, res) => {
-  res.redirect("http://localhost:5173/payment-success");
+  res.redirect("https://photography-frontend-eta.vercel.app/payment-success");
 });
 
 // SSLCommerz FAIL Callback
 app.post("/fail", (req, res) => {
-  res.redirect("http://localhost:5173/payment-failed");
+  res.redirect("https://photography-frontend-eta.vercel.app/payment-failed");
 });
 
 
