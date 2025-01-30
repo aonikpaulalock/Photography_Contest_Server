@@ -79,7 +79,8 @@ const vaildatePayment = async (payload: any) => {
       url: `${config.validate_api}?val_id=${payload.val_id}&store_id=${config.store_id}&store_passwd=${config.store_pass}&format=json`
     })
 
-    return response.data
+    return response?.data
+    
   } catch (error) {
     throw new AppError(
       httpStatus.BAD_REQUEST,

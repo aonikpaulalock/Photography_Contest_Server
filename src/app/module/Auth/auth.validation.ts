@@ -1,20 +1,20 @@
 import { z } from "zod";
 import { userRole, UserStatus } from "./auth.constant";
 
-const passwordValidationSchema = z.string()
-  .refine((password) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-    return regex.test(password)
-  }, {
-    message: "must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one digit"
-  })
+// const passwordValidationSchema = z.string()
+//   .refine((password) => {
+//     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+//     return regex.test(password)
+//   }, {
+//     message: "must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one digit"
+//   })
 
 
 const createUserValidation = z.object({
   body: z.object({
     username: z.string(),
     email: z.string(),
-    password: passwordValidationSchema,
+    password: z.string().min(8, "Password must be at least 8 characters"),
     role: z.enum([...userRole] as [string, ...string[]]).default("user"),
     isDeleted: z.boolean().default(false),
     status: z.enum([...UserStatus] as [string, ...string[]]).default("active"),
@@ -26,7 +26,7 @@ const createUserValidation = z.object({
 })
 
 const updateUserValidation = z.object({
-    body: z.object({
+  body: z.object({
     bio: z.string().optional(),
     designation: z.string().optional(),
     country: z.string().optional(),
@@ -38,14 +38,14 @@ const updateUserValidation = z.object({
 const loginUserValidation = z.object({
   body: z.object({
     email: z.string({ required_error: 'email is required.' }),
-    password: passwordValidationSchema,
+    password: z.string().min(8, "Password must be at least 8 characters"),
   }),
 })
 
 const changePasswordValidation = z.object({
   body: z.object({
-    currentPassword: passwordValidationSchema,
-    newPassword: passwordValidationSchema,
+    currentPassword: z.string().min(8, "Password must be at least 8 characters"),
+    newPassword: z.string().min(8, "Password must be at least 8 characters"),
   })
 })
 

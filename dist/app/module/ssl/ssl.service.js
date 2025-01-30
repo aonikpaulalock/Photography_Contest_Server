@@ -80,7 +80,7 @@ const vaildatePayment = (payload) => __awaiter(void 0, void 0, void 0, function*
             method: "GET",
             url: `${config_1.default.validate_api}?val_id=${payload.val_id}&store_id=${config_1.default.store_id}&store_passwd=${config_1.default.store_pass}&format=json`
         });
-        return response.data;
+        return response === null || response === void 0 ? void 0 : response.data;
     }
     catch (error) {
         throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "Payment Failed");

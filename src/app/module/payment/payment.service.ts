@@ -58,12 +58,12 @@ const paymentInitIntoDB = async (
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const validatePaymentIntoDB = async (payload: any) => {
+  //! Deploy korle dibo
+  // const response = await sslServices.vaildatePayment(payload);
 
-  //  const response = await sslServices.vaildatePayment(payload);
-  //  console.log("SSL Payment Validation Response:", response); 
-  //  if (response.status !== "VALID") {
-  //    throw new AppError(httpStatus.BAD_REQUEST, "Payment validation failed");
-  //  }
+  // if (!(response.status == "VALID")) {
+  //   throw new AppError(httpStatus.BAD_REQUEST, "Payment validation failed");
+  // }
   const response = payload;
 
   const session = await mongoose.startSession();
@@ -125,11 +125,13 @@ const validatePaymentIntoDB = async (payload: any) => {
       message: "Payment validated successfully!",
     };
   } catch (error) {
+    console.log(error)
     await session.abortTransaction();
     session.endSession();
     throw new AppError(httpStatus.INTERNAL_SERVER_ERROR, "Internal server error");
   }
 }
+
 
 export const PaymentServices = {
   paymentInitIntoDB,

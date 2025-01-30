@@ -59,11 +59,13 @@ const paymentInitIntoDB = (contestId, winnerId) => __awaiter(void 0, void 0, voi
 });
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const validatePaymentIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    //  const response = await sslServices.vaildatePayment(payload);
-    //  console.log("SSL Payment Validation Response:", response); 
-    //  if (response.status !== "VALID") {
-    //    throw new AppError(httpStatus.BAD_REQUEST, "Payment validation failed");
-    //  }
+    // console.log(payload)
+    //! Deploy korle dibo
+    // const response = await sslServices.vaildatePayment(payload);
+    // console.log(response)
+    // if (!(response.status == "VALID")) {
+    //   throw new AppError(httpStatus.BAD_REQUEST, "Payment validation failed");
+    // }
     const response = payload;
     const session = yield mongoose_1.default.startSession();
     session.startTransaction();
@@ -101,6 +103,7 @@ const validatePaymentIntoDB = (payload) => __awaiter(void 0, void 0, void 0, fun
         };
     }
     catch (error) {
+        console.log(error);
         yield session.abortTransaction();
         session.endSession();
         throw new AppError_1.default(http_status_1.default.INTERNAL_SERVER_ERROR, "Internal server error");
