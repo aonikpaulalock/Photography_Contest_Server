@@ -59,10 +59,8 @@ const paymentInitIntoDB = (contestId, winnerId) => __awaiter(void 0, void 0, voi
 });
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const validatePaymentIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    // console.log(payload)
     //! Deploy korle dibo
     // const response = await sslServices.vaildatePayment(payload);
-    // console.log(response)
     // if (!(response.status == "VALID")) {
     //   throw new AppError(httpStatus.BAD_REQUEST, "Payment validation failed");
     // }
